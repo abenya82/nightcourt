@@ -1,3 +1,9 @@
 
 #Ignore Jupyter Notebooks
 *.ipynb
+
+# ignore ALL .log files
+*.log
+
+# ignore temp directory
+temp/ 
