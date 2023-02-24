@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "bc88a6a8-a613-4bf2-aaf0-782f5e2c3dc9",
+		"name": "The Odds API - v4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24402060"
+	},
+	"item": [
+		{
+			"name": "GET sports",
+			"item": [
+				{
+					"name": "only active sports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/v4/sports?all=true",
+							"path": [
+								"v4",
+								"sports"
+							],
+							"query": [
+								{
+									"key": "all",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all sports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/v4/sports?all=true",
+							"path": [
+								"v4",
+								"sports"
+							],
+							"query": [
+								{
+									"key": "all",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET odds",
+			"item": [
+				{
+					"name": "GET odds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/{{version}}/sports/{{sport}}/odds/?regions={{regions}}&markets={{markets}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"sports",
+								"{{sport}}",
+								"odds",
+								""
+							],
+							"query": [
+								{
+									"key": "regions",
+									"value": "{{regions}}"
+								},
+								{
+									"key": "markets",
+									"value": "{{markets}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"sport\", \"basketball_nba\")",
+							"pm.globals.set(\"regions\", \"us\")",
+							"pm.globals.set(\"markets\", \"spreads\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "344f688e5e81f65ba37d33a8b55540a0",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "query",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "apiKey",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.the-odds-api.com/",
+			"type": "string"
+		},
+		{
+			"key": "version",
+			"value": "v4",
+			"type": "string"
+		}
+	]
+}
