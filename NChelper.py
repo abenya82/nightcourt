@@ -49,14 +49,14 @@ def get_odds_data():
     res = requests.get(whole_url)
     return res
 
-def get_player_current_team(player_id):
+def get_player_current_team(player_id) -> str:
     career = playercareerstats.PlayerCareerStats(player_id=player_id)
     career_df = career.get_data_frames()[0]
     if career_df.iloc[-1]['TEAM_ABBREVIATION'] == 'TOT':
         team = career_df.iloc[-2]['TEAM_ABBREVIATION']
     else:
         team = career_df.iloc[-1]['TEAM_ABBREVIATION']
-    return team
+    return str(team)
 
 nba_team_dict = {
 'ATL': 	'Atlanta Hawks',
