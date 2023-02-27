@@ -23,7 +23,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.bookieSelectComboBox.setEnabled(True)
         self.bookieSelectComboBox.addItems(['FanDuel','Barstool'])
         self.bookieSelectComboBox.currentTextChanged.connect(self.bookie_changed)
-
+        self.current_bookie = self.bookieSelectComboBox.currentText()
 
         #Enable features on 'Start Button' click
         self.start_button.clicked.connect(self.show_app)
@@ -34,6 +34,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.player_go_button.clicked.connect(self.showPlayerStats)
         self.quitButton.clicked.connect(self.close_app)
+
+
+        self.odds_data = NChelper.get_odds_data_from_api()
+
 
         
 ## END INIT
@@ -137,8 +141,10 @@ class MainWindow(QtWidgets.QMainWindow):
         # puts data in the table locations
         for i in range(len(last10_rev_short.keys())):
             for j in range(10):
-                self.last10gamestable.setItem(j,i, QtWidgets.QTableWidgetItem(str(last10_rev_short.iloc[j][i])))
-        
+                try:
+                    self.last10gamestable.setItem(j,i, QtWidgets.QTableWidgetItem(str(last10_rev_short.iloc[j][i])))
+                except:
+                    pass
 
 
         
@@ -147,12 +153,27 @@ class MainWindow(QtWidgets.QMainWindow):
         self.last10gamestable.resizeColumnsToContents()
 
         ## Get Next Game 
+        ## get player's current team from current year stats
         player_team_short = NChelper.get_player_current_team(id_)
-        print(player_team_short)
         
+        #print(player_team_short)
+        
+        # if player was traded this year, last entry in table will show TOT
+        #    for total, get team name from previous row
         assert player_team_short != 'TOT', 'team short name cant be TOT'
         full_team_name = NChelper.nba_team_dict[player_team_short]
+        ##Have player ID, name, team name
 
+        ## get next game info
+        ## info == date, time, hometeam, away team, spreads
+
+        
+        ## get odds Json, from odds data loaded on start
+        odds_data_json = self.odds_data.json()
+        ## helper function will return next game info:
+        ###     hometeam, awayteam, spreads, date, time
+        Odds_Data_Event = NChelper.next_game_odds(odds_data_json=odds_data_json,team_name=full_team_name,bookie_name=self.current_bookie)
+        Odds_Data_Event.print()
 
 
     def show_app(self):

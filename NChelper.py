@@ -4,11 +4,71 @@ from nba_api.stats.endpoints import playergamelog
 import requests
 import sys
 
+class Event():
+    def __init__(self,date,time,home_team,away_team,
+                    home_team_spread,away_team_spread):
+        self.date = date
+        self.time = time    
+        self.home_team = home_team
+        self.away_team = away_team
+        self.home_team_spread = home_team_spread
+        self.away_team_spread = away_team_spread
+    def print(self):
+        print(self.date)
+        print(self.time)
+        print(self.home_team)
+        print(self.away_team)
+        print(self.home_team_spread)
+        print(self.away_team_spread)
+
+
 def get_odds_data_from_api():
     whole_url = 'https://api.the-odds-api.com/v4/sports/basketball_nba/odds/?apiKey=344f688e5e81f65ba37d33a8b55540a0&regions=us&markets=spreads'
 
     res = requests.get(whole_url)
     return res
+
+
+def next_game_odds(odds_data_json,team_name,bookie_name='fanduel'):
+    
+    
+    
+    
+    next_game = [game for game in odds_data_json if game['home_team']==team_name or game['away_team']==team_name ]
+    if next_game == []:
+        
+        print('no next game')
+        Next_game_event = Event(' ',' ',' ',' ',' ',' ',)
+    else:
+        home_team = next_game[0]['home_team']
+        away_team = next_game[0]['away_team']
+        date = next_game[0]['commence_time'][:10]
+        time = next_game[0]['commence_time'][11:]
+
+
+        
+        bookie_data = [entry for entry in next_game[0]['bookmakers'] if entry['key']==bookie_name]
+        try:
+            team1 = bookie_data[0]['markets'][0]['outcomes'][0]['name']
+            team1_spread = bookie_data[0]['markets'][0]['outcomes'][0]['point']
+            team2 = bookie_data[0]['markets'][0]['outcomes'][1]['name']
+            team2_spread = bookie_data[0]['markets'][0]['outcomes'][1]['point']
+
+            if team1 == home_team:
+                home_team_spread = team1_spread
+                away_team_spread = team2_spread
+            elif team1 == away_team:
+                away_team_spread = team1_spread
+                home_team_spread = team2_spread 
+
+            Next_game_event = Event(date=date,time=time,home_team=home_team,away_team=away_team,home_team_spread=home_team_spread,away_team_spread=away_team_spread)
+        
+        except:
+            Next_game_event = Event(' ',' ',' ',' ',' ',' ',)
+
+    return Next_game_event
+
+
 
 
 def getActivePlayers():

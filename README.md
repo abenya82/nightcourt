@@ -23,7 +23,9 @@ Betting odds data is retrieved via API from [theOddsAPI](https://the-odds-api.co
 >> - No executable
 >> -  Must run python file in environment with proper dependencies
 
-> ### Future Functionality
+<br>
+
+> ## Future Functionality
 >> - [ ] Outlier Detection
 >> - [ ] Color Code Output
 >> - [ ] Make and present histograms of attributes
