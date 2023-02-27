@@ -4,6 +4,8 @@ from nba_api.stats.endpoints import playergamelog
 import requests
 import sys
 
+import config
+
 class Event():
     def __init__(self,date,time,home_team,away_team,
                     home_team_spread,away_team_spread):
@@ -23,7 +25,7 @@ class Event():
 
 
 def get_odds_data_from_api():
-    whole_url = 'https://api.the-odds-api.com/v4/sports/basketball_nba/odds/?apiKey=344f688e5e81f65ba37d33a8b55540a0&regions=us&markets=spreads'
+    whole_url = 'https://api.the-odds-api.com/v4/sports/basketball_nba/odds/?apiKey='+ config.api_key +'&regions=us&markets=spreads'
 
     res = requests.get(whole_url)
     return res
