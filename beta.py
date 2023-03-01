@@ -24,6 +24,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.bookieSelectComboBox.addItems(['FanDuel','Barstool'])
         self.bookieSelectComboBox.currentTextChanged.connect(self.bookie_changed)
         self.current_bookie = self.bookieSelectComboBox.currentText()
+        self.current_bookie = NChelper.bookie_abbr_dict[self.current_bookie]
 
         #Enable features on 'Start Button' click
         self.start_button.clicked.connect(self.show_app)
@@ -54,6 +55,15 @@ class MainWindow(QtWidgets.QMainWindow):
         print(self.current_bookie)
 
     def showPlayerStats(self):
+        """
+        
+        
+        Called when 'get stats' UI button is pressed by user
+
+        Clears Main Info Table
+        Clears Next Game Table
+
+        """
         #gets name selected in pull down menu
         player_name = self.select_player_combo_box.currentText()
         print(player_name)
@@ -152,7 +162,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.last10gamestable.resizeRowsToContents()
         self.last10gamestable.resizeColumnsToContents()
 
-        ## Get Next Game 
+        ### START Next Game Table
+
         ## get player's current team from current year stats
         player_team_short = NChelper.get_player_current_team(id_)
         
@@ -179,9 +190,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.nextGameInfoTable.setColumnCount(5)
 
         #headers for table
-        self.nextGameInfoTable.setHorizontalHeaderLabels(["Next Game","Last Update"])
+        self.nextGameInfoTable.setHorizontalHeaderLabels(["Next Game","Last Update","Team","Price","Spread"])
         
-
+        print(self.current_bookie)
         next_game_time,last_update,bet_info = NChelper.get_one_game_odds_data(odds_data_json=odds_data_json,target_team=full_team_name,target_bookie=self.current_bookie)
         
         
@@ -193,7 +204,25 @@ class MainWindow(QtWidgets.QMainWindow):
         self.nextGameInfoTable.setItem(0,0,QtWidgets.QTableWidgetItem(next_game_time_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
         self.nextGameInfoTable.setItem(0,1,QtWidgets.QTableWidgetItem(last_update_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
 
+        if bet_info==[]:
+            self.nextGameInfoTable.setItem(0,2,QtWidgets.QTableWidgetItem('no data'))
+        else:
+            for row,item in enumerate(bet_info):
+                self.nextGameInfoTable.setItem(row,2,QtWidgets.QTableWidgetItem(str(item['name'])))
+                self.nextGameInfoTable.setItem(row,3,QtWidgets.QTableWidgetItem(str(item['price'])))
+                self.nextGameInfoTable.setItem(row,4,QtWidgets.QTableWidgetItem(str(item['point'])))
 
+            
+            
+
+
+
+
+
+
+        self.nextGameInfoTable.resizeRowsToContents()
+        self.nextGameInfoTable.resizeColumnsToContents()
+        ## END Next Game Table
 
 
 

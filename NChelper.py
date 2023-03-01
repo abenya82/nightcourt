@@ -120,6 +120,28 @@ def get_player_current_team(player_id) -> str:
     else:
         team = career_df.iloc[-1]['TEAM_ABBREVIATION']
     return str(team)
+bookie_abbr_dict={
+'DraftKings':       'draftkings',
+'Bovada':           'bovada',
+'BetUS':            'betus',
+'BetMGM':           'betmgm',
+'Circa Sports':     'circasports',
+'FanDuel':          'fanduel',
+'William Hill (US)':'williamhill_us',
+'SugarHouse':       'sugarhouse',
+'BetRivers':        'betrivers',
+'Barstool Sportsbook':'barstool',
+'TwinSpires':       'twinspires',
+'Unibet':           'unibet_us',
+'FOX Bet':          'foxbet',
+'PointsBet (US)':   'pointsbetus',
+'BetOnline.ag':     'betonlineag',
+'LowVig.ag':        'lowvig',
+'WynnBET':          'wynnbet',
+'SuperBook':        'superbook',
+'MyBookie.ag':      'mybookieag',
+}
+
 
 nba_team_dict = {
 'ATL': 	'Atlanta Hawks',
