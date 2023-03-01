@@ -188,7 +188,7 @@ class MainWindow(QtWidgets.QMainWindow):
         next_game_time_EST = NChelper.convert_datetime_to_eastern(next_game_time_GMT)
         last_update_EST = NChelper.convert_datetime_to_eastern(last_update_GMT)
         
-        self.nextGameInfoTable.setItem(0,0,QtWidgets.QTableWidgetItem(next_game_time_EST.strftime("%Y  %b %d  %H:%M %Z")))
+        self.nextGameInfoTable.setItem(0,0,QtWidgets.QTableWidgetItem(next_game_time_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
 
 
 

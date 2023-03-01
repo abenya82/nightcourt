@@ -43,11 +43,17 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>20</x>
       <y>110</y>
-      <width>201</width>
-      <height>21</height>
+      <width>271</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Batang</family>
+      <pointsize>12</pointsize>
+     </font>
     </property>
    </widget>
    <widget class="QLabel" name="player_title_label">
@@ -64,6 +70,9 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="text">
      <string>Select Player</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::RichText</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="start_button">
@@ -86,7 +95,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>140</y>
+      <y>170</y>
       <width>121</width>
       <height>31</height>
      </rect>
