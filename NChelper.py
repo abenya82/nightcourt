@@ -3,8 +3,9 @@ from nba_api.stats.endpoints import playercareerstats
 from nba_api.stats.endpoints import playergamelog
 import requests
 import sys
-
-import config
+import datetime
+import config     ##apikey
+import pytz       ##timezone
 
 class Event():
     def __init__(self,date,time,home_team,away_team,
@@ -156,3 +157,62 @@ nba_team_dict = {
 
 def close_app():
     sys.exit()
+
+##convert time to eastern
+def convert_to_datetime(date_string,tzinfo=datetime.timezone.utc):
+    date_string = str(date_string)
+    year = int(date_string[0:4])
+    month = int(date_string[5:7])
+    day = int(date_string[8:10])
+    hour = int(date_string[11:13])
+    minute = int(date_string[14:16])
+    second = int(date_string[17:19])
+    #print(year,month,day,hour,minute,second)
+    datetime_src = datetime.datetime(year,month,day,hour,minute,second)
+    
+    return datetime_src
+
+def convert_datetime_to_eastern(datetime_src):
+
+
+    old_timezone = pytz.timezone("UTC")
+    new_timezone = pytz.timezone("US/Eastern")
+    new_timezone_timestamp = old_timezone.localize(datetime_src).astimezone(new_timezone) 
+    return new_timezone_timestamp
+
+
+
+
+
+
+def get_one_game_odds_data(odds_data_json,target_team,target_bookie):
+    outcomes = []
+    next_games = [game for game in odds_data_json if game['home_team']==target_team or game['away_team']==target_team]
+    try:
+        next_game = next_games[0]
+    except:
+        print("ERROR: team name error")
+    if next_games == []:
+        print("No next game")
+        game_time=0
+        last_update=''
+        outcomes=[]
+        
+    else:
+        game_time = next_game['commence_time']
+        last_update = next_game['bookmakers'][0]['last_update']
+        bookie_all = next_game['bookmakers']
+        one_bookie_data = [x for x in bookie_all if x['key']==target_bookie]
+        if one_bookie_data==[]:
+            print('no data')
+        else:
+            outcomes = one_bookie_data[0]['markets'][0]['outcomes']
+            
+    return game_time,last_update,outcomes
+
+
+
+
+
+
+

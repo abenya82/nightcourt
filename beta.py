@@ -172,8 +172,24 @@ class MainWindow(QtWidgets.QMainWindow):
         odds_data_json = self.odds_data.json()
         ## helper function will return next game info:
         ###     hometeam, awayteam, spreads, date, time
-        Odds_Data_Event = NChelper.next_game_odds(odds_data_json=odds_data_json,team_name=full_team_name,bookie_name=self.current_bookie)
-        Odds_Data_Event.print()
+        
+        self.nextGameInfoTable.setEnabled(True)
+
+        self.nextGameInfoTable.setRowCount(2)
+        self.nextGameInfoTable.setColumnCount(5)
+
+        #headers for table
+        self.nextGameInfoTable.setHorizontalHeaderLabels(["Next Game"])
+        
+        next_game_time,last_update,bet_info = NChelper.get_one_game_odds_data(odds_data_json=odds_data_json,target_team=full_team_name,target_bookie=self.current_bookie)
+        
+        next_game_time_GMT = NChelper.convert_to_datetime(next_game_time)
+        last_update_GMT = NChelper.convert_to_datetime(last_update)
+        next_game_time_EST = NChelper.convert_datetime_to_eastern(next_game_time_GMT)
+        last_update_EST = NChelper.convert_datetime_to_eastern(last_update_GMT)
+        
+        self.nextGameInfoTable.setItem(0,0,QtWidgets.QTableWidgetItem(next_game_time_EST.strftime("%Y  %b %d  %H:%M %Z")))
+
 
 
     def show_app(self):
