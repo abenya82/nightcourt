@@ -179,9 +179,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.nextGameInfoTable.setColumnCount(5)
 
         #headers for table
-        self.nextGameInfoTable.setHorizontalHeaderLabels(["Next Game"])
+        self.nextGameInfoTable.setHorizontalHeaderLabels(["Next Game","Last Update"])
         
+
         next_game_time,last_update,bet_info = NChelper.get_one_game_odds_data(odds_data_json=odds_data_json,target_team=full_team_name,target_bookie=self.current_bookie)
+        
         
         next_game_time_GMT = NChelper.convert_to_datetime(next_game_time)
         last_update_GMT = NChelper.convert_to_datetime(last_update)
@@ -189,6 +191,10 @@ class MainWindow(QtWidgets.QMainWindow):
         last_update_EST = NChelper.convert_datetime_to_eastern(last_update_GMT)
         
         self.nextGameInfoTable.setItem(0,0,QtWidgets.QTableWidgetItem(next_game_time_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
+        self.nextGameInfoTable.setItem(0,1,QtWidgets.QTableWidgetItem(last_update_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
+
+
+
 
 
 
