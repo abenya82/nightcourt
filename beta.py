@@ -115,9 +115,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.playerCurrentStatTable.setItem(1,2, QtWidgets.QTableWidgetItem('Averages:'))
 
-
         
-
 
 
 
@@ -155,12 +153,44 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.last10gamestable.setItem(j,i, QtWidgets.QTableWidgetItem(str(last10_rev_short.iloc[j][i])))
                 except:
                     pass
+        print(str(last10_rev_short.iloc[0][0]))
+        print(str(last10_rev_short.iloc[1][0]))
+        print(last10_rev_short['GAME_DATE'])
 
 
-        
+        ## colors GAME_DATE if more than 14 days ago
+        for i in range(len(last10_rev_short['GAME_DATE'])):
+            date_string = last10_rev_short.iloc[i][0]
+            month_abbr = date_string[0:3]
+            month = NChelper.months[month_abbr]
+            day = date_string[4:6]
+            year = date_string[8:12]
+            date = NChelper.datetime.date(int(year),int(month),int(day))
+            today = NChelper.datetime.date.today()
+            days_since = today-date
+            print(days_since.days)
+            if days_since.days > 14:
+                self.last10gamestable.item(i, 0).setBackground(NChelper.colors['red'])
+
+
+
 
         self.last10gamestable.resizeRowsToContents()
         self.last10gamestable.resizeColumnsToContents()
+
+
+        ## table items must be populated before you can set background color
+
+        ##  get all stats for player for whole season
+
+        ##  for each attribute, get 10s percentile values
+
+
+        ## color code stat cells based on value
+        self.last10gamestable.item(3, 5).setBackground(QtGui.QColor(100,100,150))
+
+
+
 
         ### START Next Game Table
 

@@ -1,6 +1,9 @@
 from nba_api.stats.static import players
 from nba_api.stats.endpoints import playercareerstats
 from nba_api.stats.endpoints import playergamelog
+
+from PyQt5 import QtCore, QtWidgets, QtGui
+
 import requests
 import sys
 import datetime
@@ -258,6 +261,53 @@ def make_odds_api_call(eventid='',keys=[],values=[],apikey=config.api_key):
     return res
 
 
+## month dictionary
+months = {
+
+    'JAN':1,
+    'FEB':2,
+    'MAR':3,
+    'APR':4,
+    'MAY':5,
+    'JUN':6,
+    'JUL':7,
+    'AUG':8,
+    'SEP':9,
+    'OCT':10,
+    'NOV':11,
+    'DEC':12,
+    }
+
+## color dictionaries
+colors = {
+    'red': QtGui.QColor(255,0,0),
+    'green': QtGui.QColor(0,255,0),
+    'blue': QtGui.QColor(0,0,255),
 
 
 
+    'grad_0':QtGui.QColor(0,168,252),
+    'grad_10':QtGui.QColor(108,205,253),
+    'grad_20':QtGui.QColor(197,235,254),
+    'grad_30':QtGui.QColor(188,150,249),
+    'grad_40':QtGui.QColor(179,65,244),
+    'grad_50':QtGui.QColor(189,56,211),
+    'grad_60':QtGui.QColor(201,46,173),
+    'grad_70':QtGui.QColor(213,36,134),
+    'grad_80':QtGui.QColor(224,26,98),
+    'grad_90':QtGui.QColor(238,14,54),
+    'grad_100':QtGui.QColor(255,0,0),
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
