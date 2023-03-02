@@ -199,6 +199,12 @@ p, li { white-space: pre-wrap; }
       <height>91</height>
      </rect>
     </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
    </widget>
    <widget class="QComboBox" name="bookieSelectComboBox">
     <property name="geometry">

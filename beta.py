@@ -201,12 +201,20 @@ class MainWindow(QtWidgets.QMainWindow):
         next_game_time_EST = NChelper.convert_datetime_to_eastern(next_game_time_GMT)
         last_update_EST = NChelper.convert_datetime_to_eastern(last_update_GMT)
         
+        #Clear Table contents
+        self.nextGameInfoTable.clearContents()
+        self.nextGameInfoTable.setVerticalHeaderLabels([])
+
+
+
         self.nextGameInfoTable.setItem(0,0,QtWidgets.QTableWidgetItem(next_game_time_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
         self.nextGameInfoTable.setItem(0,1,QtWidgets.QTableWidgetItem(last_update_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
 
         if bet_info==[]:
-            self.nextGameInfoTable.setItem(0,2,QtWidgets.QTableWidgetItem('no data'))
-        else:
+            for i in range(3):
+                self.nextGameInfoTable.setItem(0,2+i,QtWidgets.QTableWidgetItem('no data'))
+                self.nextGameInfoTable.setItem(1,2+i,QtWidgets.QTableWidgetItem('no data'))
+        else:   
             for row,item in enumerate(bet_info):
                 self.nextGameInfoTable.setItem(row,2,QtWidgets.QTableWidgetItem(str(item['name'])))
                 self.nextGameInfoTable.setItem(row,3,QtWidgets.QTableWidgetItem(str(item['price'])))

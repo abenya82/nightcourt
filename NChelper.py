@@ -235,6 +235,29 @@ def get_one_game_odds_data(odds_data_json,target_team,target_bookie):
 
 
 
+def make_odds_api_call(eventid='',keys=[],values=[],apikey=config.api_key):
+
+
+
+
+    url = 'https://api.the-odds-api.com/v4/sports/basketball_nba/events/'
+    url += eventid
+    url += '/odds?'
+    url += 'apiKey='+ apikey + '&'
+    for key,value in zip(keys,values):
+        url += key
+        url += '='
+        url += value
+        if key!=keys[-1]:
+            url += '&'
+    
+    res = requests.get(url)
+
+
+    
+    return res
+
+
 
 
 
