@@ -170,6 +170,15 @@ p, li { white-space: pre-wrap; }
       <height>271</height>
      </rect>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
    </widget>
    <widget class="QLabel" name="last10GamesLabel">
     <property name="enabled">

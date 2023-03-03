@@ -123,6 +123,7 @@ def get_player_current_team(player_id) -> str:
     else:
         team = career_df.iloc[-1]['TEAM_ABBREVIATION']
     return str(team)
+
 bookie_abbr_dict={
 'DraftKings':       'draftkings',
 'Bovada':           'bovada',
@@ -211,6 +212,12 @@ def convert_datetime_to_eastern(datetime_src):
 
 
 def get_one_game_odds_data(odds_data_json,target_team,target_bookie):
+    '''
+    returns:
+        string: game time
+        string: last update
+        List of Dict: outcomes
+    '''
     outcomes = []
     next_games = [game for game in odds_data_json if game['home_team']==target_team or game['away_team']==target_team]
     try:
@@ -239,7 +246,16 @@ def get_one_game_odds_data(odds_data_json,target_team,target_bookie):
 
 
 def make_odds_api_call(eventid='',keys=[],values=[],apikey=config.api_key):
+    '''
+    params:
+    eventid :   Event ID according to Odds API
+    keys    :   List of keys
+    values  :   List of Values
+    apiKey  :   string
 
+    possible keys:
+        
+    '''
 
 
 

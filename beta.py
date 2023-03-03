@@ -266,11 +266,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def show_app(self):
+        
         self.player_title_label.setEnabled(True)
         self.select_player_combo_box.setEnabled(True)
         self.player_go_button.setEnabled(True)
         return
     
+
+
     def close_app(self):
         NChelper.close_app()
    

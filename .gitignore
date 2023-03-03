@@ -2,7 +2,10 @@
 config.py
 __pycache__
 .ipynb_checkpoints
+*.spec
+*.db
 
+.hypothesis/
 
 #Ignore Jupyter Notebooks
 *.ipynb
