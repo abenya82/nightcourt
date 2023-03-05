@@ -107,6 +107,12 @@ def get_player_averages_dict(player_id):
     
     return average_dict
 
+def get_player_dataframe(player_id):
+    res = playergamelog.PlayerGameLog(player_id)
+    res2 = res.player_game_log.get_data_frame()
+    return res2
+
+
 
 def get_odds_data():
     

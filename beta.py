@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 
 from PyQt5 import uic
 import NChelper
-
+import logging
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -11,9 +11,11 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__()
         uic.loadUi('ui_one.ui', self)
 
+        logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
 
 
-        print('1')
+        logging.info('Program Start')
+        
 
         current_bookie = 'FanDuel'
 
@@ -66,10 +68,12 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         #gets name selected in pull down menu
         player_name = self.select_player_combo_box.currentText()
-        print(player_name)
+        logging.info('player: %s', player_name)
+
         # gets ID of that player
         id_ = [player for player in NChelper.getPlayerDict() if player['full_name']==player_name][0]['id']
-        print(id_)
+        logging.info('id: %s', id_)
+        
 
 
 
@@ -91,7 +95,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.playerCurrentStatTable.setColumnCount(len(career_stats.iloc[-1].keys()))
 
 
-        #clear table
+        #clear player stat table
         for i in range(len(career_stats.iloc[-1].keys())):
             self.playerCurrentStatTable.setItem(0,i, QtWidgets.QTableWidgetItem(''))
             self.playerCurrentStatTable.setItem(1,i, QtWidgets.QTableWidgetItem(''))
@@ -99,7 +103,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.playerCurrentStatTable.item(1, i).setBackground(QtGui.QColor(255,255,255))
 
 
-        #headers for table
+        #headers for player stat table
         self.playerCurrentStatTable.setHorizontalHeaderLabels(career_stats.iloc[-1].keys())
 
         #get averages (over season)
