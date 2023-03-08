@@ -41,9 +41,42 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.odds_data = NChelper.get_odds_data_from_api()
 
+        ## populate TEAMS select box
+
+        self.teamSelectComboBox.addItems(NChelper.nba_team_dict.values())
+        self.teamSelectComboBox.currentTextChanged.connect(self.teamBox_changed)
+        self.current_team_selection = self.teamSelectComboBox.currentText()
+        
+        
+
+        print(self.current_team_selection)
+        
+        
+
+
+
+
+
 
         
 ## END INIT
+
+    def teamBox_changed(self, value):
+        '''
+        triggered by changing TEAM combo box
+
+        also clears playerfromteam combo box
+        '''
+        self.teamBoxSelection = str(value)
+        self.playerFromTeamComboBox.clear()
+        logging.info("teambox changed:"+str(value))
+
+        self.playerFromTeamComboBox.addItems(['1','2','3'])
+        
+
+
+
+
 
     def show_player_next_game(self,player_id):
         self.nextGameInfoTable.setEnabled(True)
@@ -54,7 +87,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def bookie_changed(self, value):
         self.current_bookie = str(value)
-        print(self.current_bookie)
+        logging.info("bookie changed to" + str(value))
 
     def showPlayerStats(self):
         """
@@ -225,24 +258,26 @@ class MainWindow(QtWidgets.QMainWindow):
 
         #headers for table
         self.nextGameInfoTable.setHorizontalHeaderLabels(["Next Game","Last Update","Team","Price","Spread"])
-        
-        print(self.current_bookie)
-        next_game_time,last_update,bet_info = NChelper.get_one_game_odds_data(odds_data_json=odds_data_json,target_team=full_team_name,target_bookie=self.current_bookie)
-        
-        
-        next_game_time_GMT = NChelper.convert_to_datetime(next_game_time)
-        last_update_GMT = NChelper.convert_to_datetime(last_update)
-        next_game_time_EST = NChelper.convert_datetime_to_eastern(next_game_time_GMT)
-        last_update_EST = NChelper.convert_datetime_to_eastern(last_update_GMT)
-        
         #Clear Table contents
         self.nextGameInfoTable.clearContents()
         self.nextGameInfoTable.setVerticalHeaderLabels([])
 
+        print(self.current_bookie)
+        next_game_time,last_update,bet_info = NChelper.get_one_game_odds_data(odds_data_json=odds_data_json,target_team=full_team_name,target_bookie=self.current_bookie)
+        logging.info("next game:" + str(next_game_time))
+        if bet_info!=[]:
+        
+            next_game_time_GMT = NChelper.convert_to_datetime(next_game_time)
+            last_update_GMT = NChelper.convert_to_datetime(last_update)
+            next_game_time_EST = NChelper.convert_datetime_to_eastern(next_game_time_GMT)
+            last_update_EST = NChelper.convert_datetime_to_eastern(last_update_GMT)
+            
+        
 
 
-        self.nextGameInfoTable.setItem(0,0,QtWidgets.QTableWidgetItem(next_game_time_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
-        self.nextGameInfoTable.setItem(0,1,QtWidgets.QTableWidgetItem(last_update_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
+
+            self.nextGameInfoTable.setItem(0,0,QtWidgets.QTableWidgetItem(next_game_time_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
+            self.nextGameInfoTable.setItem(0,1,QtWidgets.QTableWidgetItem(last_update_EST.strftime("%Y  %b %d  %I:%M %p  %Z")))
 
         if bet_info==[]:
             for i in range(3):
@@ -274,6 +309,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.player_title_label.setEnabled(True)
         self.select_player_combo_box.setEnabled(True)
         self.player_go_button.setEnabled(True)
+        self.teamSelectComboBox.setEnabled(True)
+        self.playerFromTeamComboBox.setEnabled(True)
         return
     
 
